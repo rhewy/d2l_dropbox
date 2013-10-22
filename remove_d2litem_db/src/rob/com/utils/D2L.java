@@ -20,6 +20,8 @@ package rob.com.utils;
 //
 //=============================================================================
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class D2L {
 	// ==============================================================================
@@ -33,7 +35,7 @@ public class D2L {
 	//
 	// Purpose : Determine if the NNNN-NNNNN pattern is present
 	//
-	// Dependencies: None
+	// Dependencies: D2LStudentSubmissionInfo
 	//
 	// Modification Log :
 	// --> Created OCT-21-2013 (rh)
@@ -95,6 +97,36 @@ public class D2L {
 		}
 
 		return shortName;
+	}
+	
+	public static ArrayList<D2LStudentSubmissionInfo> getStudentList(File dir)
+	{
+		ArrayList<D2LStudentSubmissionInfo> studentList = new ArrayList<D2LStudentSubmissionInfo>();
+		File tmpFile, destFile;
+		String[] files = dir.list();
+		Scanner oneLine;
+		String delimiter = "_";
+		String shortName;
+		D2LStudentSubmissionInfo studentInfo;
+		
+		for (String file : files) {
+			if (D2L.hasPatternItemDB(file)) {
+				
+				oneLine = new Scanner(file);
+				oneLine.useDelimiter("_");
+				studentInfo = new D2LStudentSubmissionInfo();
+				
+				studentInfo.setFirstName(oneLine.next());
+				studentInfo.setLastName(oneLine.next());
+				//studentInfo.setD2lItem(Long.parseLong(oneLine.next()));
+				//studentInfo.setDb(Long.parseLong(oneLine.next()));
+				studentList.add(studentInfo);
+				oneLine = null;
+			
+			}
+		}
+		
+		return studentList;
 	}
 
 }

@@ -35,7 +35,8 @@ public class Main {
 				dropbox_dir = new File(args[0]);
 			} else {
 				JFileChooser getPath = new JFileChooser();
-				getPath.showDialog(null, "Select the dropbox Dir");
+				getPath.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				getPath.showOpenDialog(null);
 				dropbox_dir = getPath.getSelectedFile();
 
 			}

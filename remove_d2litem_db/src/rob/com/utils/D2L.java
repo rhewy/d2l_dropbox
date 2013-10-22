@@ -124,24 +124,25 @@ public class D2L {
 
 	public static ArrayList<D2LStudentSubmissionInfo> getStudentList(File dir) {
 		ArrayList<D2LStudentSubmissionInfo> studentList = new ArrayList<D2LStudentSubmissionInfo>();
-		File tmpFile, destFile;
+	
 		String[] files = dir.list();
 		Scanner oneLine;
 		String delimiter = "_";
-		String shortName;
+
 		D2LStudentSubmissionInfo studentInfo;
 
 		for (String file : files) {
 			if (D2L.hasPatternItemDB(file)) {
-
-				oneLine = new Scanner(file);
-				oneLine.useDelimiter("_");
 				studentInfo = new D2LStudentSubmissionInfo();
+				studentInfo.setD2lItem(D2L.getD2LItem(file));
+				studentInfo.setDb(D2L.getDB(file));
+				
+				oneLine = new Scanner(D2L.getNoItemNoDBName(file));
+				oneLine.useDelimiter(delimiter);
 
 				studentInfo.setFirstName(oneLine.next());
 				studentInfo.setLastName(oneLine.next());
-				// studentInfo.setD2lItem(Long.parseLong(oneLine.next()));
-				// studentInfo.setDb(Long.parseLong(oneLine.next()));
+
 				studentList.add(studentInfo);
 				oneLine = null;
 

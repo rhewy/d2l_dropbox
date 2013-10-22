@@ -65,23 +65,23 @@ public class D2L {
 	}
 
 	// ==============================================================================
-		// Method : getNoItemNoDBName
-		//
-		// Current Author: Robert Hewlett
-		//
-		// Previous Author: None
-		//
-		// Contact Info: rob.hewy@gmail.com
-		//
-		// Purpose : Determine if the NNNN-NNNNN pattern is present
-		//
-		// Dependencies: None
-		//
-		// Modification Log :
-		// --> Created OCT-21-2013 (rh)
-		// --> Updated MMM-DD-YYYY (fl)
-		//
-		// =============================================================================
+	// Method : getNoItemNoDBName
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : Determine if the NNNN-NNNNN pattern is present
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-21-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
 	public static String getNoItemNoDBName(String file) {
 		String shortName = null;
 		try {

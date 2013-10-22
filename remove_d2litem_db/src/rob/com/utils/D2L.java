@@ -46,21 +46,15 @@ public class D2L {
 		boolean pattern = false;
 
 		try {
-			int firstHyphen = file.indexOf("-");
 
-			String d2lItemAsString = file.substring(0, firstHyphen);
-			String rest = file.substring(firstHyphen + 1);
+			long db = getD2LItem(file);
+			long d2lItem = getDB(file);
 
-			int secondHyphen = rest.indexOf("-");
-			String dbAsString = rest.substring(0, secondHyphen);
-
-			long dbAsLong = Long.parseLong(dbAsString.trim());
-			long d2lItemAsLong = Long.parseLong(d2lItemAsString.trim());
-
-			pattern = true;
-
+			if (db > 0 && d2lItem > 0) {
+				pattern = true;
+			}
 		} catch (Exception e) {
-			// System.out.println(e);
+			e.printStackTrace();
 		}
 
 		return pattern;
@@ -93,14 +87,42 @@ public class D2L {
 			shortName = rest.substring(secondHyphen + 1).trim();
 
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 
 		return shortName;
 	}
-	
-	public static ArrayList<D2LStudentSubmissionInfo> getStudentList(File dir)
-	{
+
+	public static long getD2LItem(String file) {
+		long d2lItem = -1;
+		try {
+			int firstHyphen = file.indexOf("-");
+			String d2lItemAsString = file.substring(0, firstHyphen);
+			String rest = file.substring(firstHyphen + 1);
+			d2lItem = Long.parseLong(d2lItemAsString.trim());
+		} catch (Exception e) {
+
+		}
+		return d2lItem;
+	}
+
+	public static long getDB(String file) {
+		long db = -1;
+		try {
+			int firstHyphen = file.indexOf("-");
+			String d2lItemAsString = file.substring(0, firstHyphen);
+			String rest = file.substring(firstHyphen + 1);
+
+			int secondHyphen = rest.indexOf("-");
+			String dbAsString = rest.substring(0, secondHyphen);
+			db = Long.parseLong(dbAsString.trim());
+		} catch (Exception e) {
+
+		}
+		return db;
+	}
+
+	public static ArrayList<D2LStudentSubmissionInfo> getStudentList(File dir) {
 		ArrayList<D2LStudentSubmissionInfo> studentList = new ArrayList<D2LStudentSubmissionInfo>();
 		File tmpFile, destFile;
 		String[] files = dir.list();
@@ -108,24 +130,24 @@ public class D2L {
 		String delimiter = "_";
 		String shortName;
 		D2LStudentSubmissionInfo studentInfo;
-		
+
 		for (String file : files) {
 			if (D2L.hasPatternItemDB(file)) {
-				
+
 				oneLine = new Scanner(file);
 				oneLine.useDelimiter("_");
 				studentInfo = new D2LStudentSubmissionInfo();
-				
+
 				studentInfo.setFirstName(oneLine.next());
 				studentInfo.setLastName(oneLine.next());
-				//studentInfo.setD2lItem(Long.parseLong(oneLine.next()));
-				//studentInfo.setDb(Long.parseLong(oneLine.next()));
+				// studentInfo.setD2lItem(Long.parseLong(oneLine.next()));
+				// studentInfo.setDb(Long.parseLong(oneLine.next()));
 				studentList.add(studentInfo);
 				oneLine = null;
-			
+
 			}
 		}
-		
+
 		return studentList;
 	}
 

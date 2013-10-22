@@ -21,8 +21,11 @@ package rob.run;
 // =============================================================================
 import java.awt.HeadlessException;
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.JFileChooser;
-import rob.com.utils.D2L;;
+import rob.com.utils.D2L;
+import rob.com.utils.D2LStudentSubmissionInfo;
 
 public class Main {
 	public static void main(String[] args) {
@@ -41,24 +44,29 @@ public class Main {
 
 			}
 
-			File tmpFile, destFile;
-			// ===========================================================
-			// Strip the item and db ids off the file
-			// ===========================================================
-			String[] files = dropbox_dir.list();
-			String shortName;
-			for (String file : files) {
-				if (D2L.hasPatternItemDB(file)) {
-					tmpFile = new File(dropbox_dir, file);
-					shortName = D2L.getNoItemNoDBName(file);
-					destFile = new File(dropbox_dir, shortName);
-					tmpFile.renameTo(destFile);
+			ArrayList<D2LStudentSubmissionInfo> studList = D2L
+					.getStudentList(dropbox_dir);
+			System.out.println(studList.size());
 
-					System.out.printf("Renaming %s ----->  %s ...... %n", file,
-							shortName);
-
-				}
-			}
+			// File tmpFile, destFile;
+			// // ===========================================================
+			// // Strip the item and db ids off the file
+			// // ===========================================================
+			// String[] files = dropbox_dir.list();
+			// String shortName;
+			//
+			//
+			// for (String file : files) {
+			// if (D2L.hasPatternItemDB(file)) {
+			// tmpFile = new File(dropbox_dir, file);
+			// shortName = D2L.getNoItemNoDBName(file);
+			// destFile = new File(dropbox_dir, shortName);
+			// tmpFile.renameTo(destFile);
+			// System.out.printf("Renaming %s ----->  %s ...... %n", file,
+			// shortName);
+			//
+			// } // end of the if pattern is there
+			// } // end of the for
 		} catch (HeadlessException e) {
 			e.printStackTrace();
 		}

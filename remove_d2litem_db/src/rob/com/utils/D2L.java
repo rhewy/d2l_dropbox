@@ -124,7 +124,7 @@ public class D2L {
 
 	public static ArrayList<D2LStudentSubmissionInfo> getStudentList(File dir) {
 		ArrayList<D2LStudentSubmissionInfo> studentList = new ArrayList<D2LStudentSubmissionInfo>();
-	
+
 		String[] files = dir.list();
 		Scanner oneLine;
 		String delimiter = "_";
@@ -136,14 +136,15 @@ public class D2L {
 				studentInfo = new D2LStudentSubmissionInfo();
 				studentInfo.setD2lItem(D2L.getD2LItem(file));
 				studentInfo.setDb(D2L.getDB(file));
-				
+
 				oneLine = new Scanner(D2L.getNoItemNoDBName(file));
 				oneLine.useDelimiter(delimiter);
 
 				studentInfo.setFirstName(oneLine.next());
 				studentInfo.setLastName(oneLine.next());
-
-				studentList.add(studentInfo);
+				if (!studentList.contains(studentInfo)) {
+					studentList.add(studentInfo);
+				}
 				oneLine = null;
 
 			}

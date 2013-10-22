@@ -60,31 +60,42 @@ public class D2LStudentSubmissionInfo {
 		this.d2lItem = d2lItem;
 	}
 
+	public String getFirstLast() {
+		return firstLast;
+	}
+
 	private void syncFirstLast() {
 		this.firstLast = this.firstName + "_" + this.lastName;
 	}
-//==============================================================================
-// Method         : equals
-//
-// Current Author: Robert Hewlett
-//
-// Previous Author: None
-//
-// Contact Info: rob.hewy@gmail.com
-//
-// Purpose : Help the arrayList determine contains
-//
-// Dependencies: None
-//
-// Modification Log :
-//    --> Created OCT-22-2013 (rh)
-//    --> Updated MMM-DD-YYYY (fl)
-//
-// =============================================================================
-	boolean equals(String value) {
+
+	// ==============================================================================
+	// Method : equals
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : Help the arrayList determine contains
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-22-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
+	@Override
+	public boolean equals(Object value) {
 		boolean same = false;
-		if (value.equals(this.firstLast)) {
-			same = true;
+
+		try {
+			D2LStudentSubmissionInfo tmp = (D2LStudentSubmissionInfo) value;
+			if (this.getFirstLast().equals(tmp.getFirstLast())) {
+				same = true;
+			}
+		} catch (Exception e) {
 		}
 		return same;
 	}

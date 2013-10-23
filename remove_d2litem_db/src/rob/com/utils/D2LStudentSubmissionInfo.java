@@ -19,52 +19,63 @@ package rob.com.utils;
 // --> Updated MMM-DD-YYYY (fl)
 //
 // =============================================================================
-public class D2LStudentSubmissionInfo {
+public class D2LStudentSubmissionInfo
+{
 	private String firstName;
 	private String lastName;
 	private String firstLast;
 	private long db;
 	private long d2lItem;
 
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName)
+	{
 		this.firstName = firstName;
 		syncFirstLast();
 	}
 
-	public String getLastName() {
+	public String getLastName()
+	{
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	public void setLastName(String lastName)
+	{
 		this.lastName = lastName;
 		syncFirstLast();
 	}
 
-	public long getDb() {
+	public long getDb()
+	{
 		return db;
 	}
 
-	public void setDb(long db) {
+	public void setDb(long db)
+	{
 		this.db = db;
 	}
 
-	public long getD2lItem() {
+	public long getD2lItem()
+	{
 		return d2lItem;
 	}
 
-	public void setD2lItem(long d2lItem) {
+	public void setD2lItem(long d2lItem)
+	{
 		this.d2lItem = d2lItem;
 	}
 
-	public String getFirstLast() {
+	public String getFirstLast()
+	{
 		return firstLast;
 	}
 
-	private void syncFirstLast() {
+	private void syncFirstLast()
+	{
 		this.firstLast = this.firstName + "_" + this.lastName;
 	}
 
@@ -87,16 +98,41 @@ public class D2LStudentSubmissionInfo {
 	//
 	// =============================================================================
 	@Override
-	public boolean equals(Object value) {
+	public boolean equals(Object value)
+	{
 		boolean same = false;
-
-		try {
+		// ===========================================================
+		// use the d2litem (internal student id) to determine uniqueness
+		// ===========================================================
+		try
+		{
 			D2LStudentSubmissionInfo tmp = (D2LStudentSubmissionInfo) value;
-			if (this.getFirstLast().equals(tmp.getFirstLast())) {
+			if (this.d2lItem == tmp.d2lItem)
+			{
 				same = true;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 		}
 		return same;
 	}
+
+	// ===============================================================================================
+	// This is the old equals based on first and last name
+	// ===============================================================================================
+	// @Override
+	// public boolean equals(Object value) {
+	// boolean same = false;
+	//
+	// try {
+	// D2LStudentSubmissionInfo tmp = (D2LStudentSubmissionInfo) value;
+	// if (this.getFirstLast().equals(tmp.getFirstLast())) {
+	// same = true;
+	// }
+	// } catch (Exception e) {
+	// }
+	// return same;
+	// }
+	// ===============================================================================================
 }

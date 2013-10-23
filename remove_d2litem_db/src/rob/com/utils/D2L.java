@@ -98,7 +98,6 @@ public class D2L {
 		try {
 			int firstHyphen = file.indexOf("-");
 			String d2lItemAsString = file.substring(0, firstHyphen);
-			String rest = file.substring(firstHyphen + 1);
 			d2lItem = Long.parseLong(d2lItemAsString.trim());
 		} catch (Exception e) {
 
@@ -110,9 +109,7 @@ public class D2L {
 		long db = -1;
 		try {
 			int firstHyphen = file.indexOf("-");
-			String d2lItemAsString = file.substring(0, firstHyphen);
 			String rest = file.substring(firstHyphen + 1);
-
 			int secondHyphen = rest.indexOf("-");
 			String dbAsString = rest.substring(0, secondHyphen);
 			db = Long.parseLong(dbAsString.trim());

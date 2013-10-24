@@ -20,6 +20,7 @@ package rob.com.utils;
 //
 //=============================================================================
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -324,7 +325,7 @@ public class D2L
 	}
 
 	// ==============================================================================
-	// Method : getStudentList
+	// Method : makeDirs
 	//
 	// Current Author: Robert Hewlett
 	//
@@ -343,5 +344,80 @@ public class D2L
 	// --> Updated MMM-DD-YYYY (fl)
 	//
 	// =============================================================================
+	public static void makeDirs(File dir,
+			ArrayList<D2LStudentSubmissionInfo> list)
+	{
+		File tmpDir;
+		for (D2LStudentSubmissionInfo info : list)
+		{
+			tmpDir = new File(dir, info.getFirstLastStudID());
+			tmpDir.mkdir();
+			tmpDir = null;
 
-}
+		}
+	}
+
+	// ==============================================================================
+	// Method : moveFile
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : create a unique student list from all the files down loaded
+	// from the
+	// drop box. The list could be used to create student dirs if needed
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-21-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
+	public static void moveFile(File dir,
+			ArrayList<D2LStudentSubmissionInfo> list)
+	{
+		// ===========================================================
+		// get the complete file dir list from the input dir
+		// ===========================================================
+
+		String[] files;
+		files = dir.list();
+
+		File toFile, toDir, fromFile;
+		// ===========================================================
+		// For every student in the list move the files
+		// ===========================================================
+		for (D2LStudentSubmissionInfo info : list)
+		{
+			// ===========================================================
+			// Build if the destination directory
+			// ===========================================================
+			toDir = new File(dir, info.getFirstLastStudID());
+
+			for (String filename : files)
+			{
+				fromFile = new File(dir, filename);
+				// ===========================================================
+				// If the file is a file and has the pattern then move the file
+				// by renaming the file
+				// ===========================================================
+				if (fromFile.isFile())
+				{
+					if (fromFile.getName().contains(
+							Long.toString(info.getD2lItem()))
+							&& fromFile.getName().contains(info.getFirstName())
+							&& fromFile.getName().contains(info.getLastName()))
+					{
+						toFile = new File(toDir, fromFile.getName());
+						fromFile.renameTo(toFile);
+					} // end of move the file by rnaing the file
+				} // end if it is a file and not a dir
+			} // end for each file/dir
+		} // end of the for each student
+	} // end of method
+
+} // end of the class

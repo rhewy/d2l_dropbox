@@ -20,6 +20,10 @@ package rob.com.utils;
 //
 //=============================================================================
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -204,7 +208,7 @@ public class D2L
 		String delimiter = "_";
 		// ===========================================================
 		// student info will temporarily hold data extracted from the file name
-		// ===========================================================	
+		// ===========================================================
 		D2LStudentSubmissionInfo studentInfo;
 		// ===========================================================
 		// Process all the file in the dir
@@ -246,6 +250,22 @@ public class D2L
 		}
 
 		return studentList;
+	}
+
+	public static void saveStudentList(File file,
+			ArrayList<D2LStudentSubmissionInfo> list)
+	{
+		try
+		{
+			ObjectOutputStream out = new ObjectOutputStream(
+					new FileOutputStream(file));
+			out.writeObject(list);
+			out.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

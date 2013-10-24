@@ -1,5 +1,7 @@
 package rob.com.utils;
 
+import java.io.Serializable;
+
 // ==============================================================================
 // Method : D2LStudentSubmissionInfo.java
 //
@@ -19,7 +21,7 @@ package rob.com.utils;
 // --> Updated MMM-DD-YYYY (fl)
 //
 // =============================================================================
-public class D2LStudentSubmissionInfo
+public class D2LStudentSubmissionInfo implements Serializable
 {
 	private String firstName;
 	private String lastName;

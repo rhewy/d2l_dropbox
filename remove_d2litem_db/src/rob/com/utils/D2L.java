@@ -20,9 +20,11 @@ package rob.com.utils;
 //
 //=============================================================================
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -252,6 +254,24 @@ public class D2L
 		return studentList;
 	}
 
+	// ==============================================================================
+	// Method : saveStudentList
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : Save the student list of D2LStudentSubmissionInfo to disc
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-21-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
 	public static void saveStudentList(File file,
 			ArrayList<D2LStudentSubmissionInfo> list)
 	{
@@ -267,5 +287,61 @@ public class D2L
 			e.printStackTrace();
 		}
 	}
+
+	// ==============================================================================
+	// Method : LoadStudentList
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : Save the student list of D2LStudentSubmissionInfo to disc
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-21-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
+	public static ArrayList<D2LStudentSubmissionInfo> loadStudentList(File file)
+	{
+		ArrayList<D2LStudentSubmissionInfo> list = null;
+		try
+		{
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+					file));
+			list = (ArrayList<D2LStudentSubmissionInfo>) in.readObject();
+			in.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	// ==============================================================================
+	// Method : getStudentList
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : create a unique student list from all the files down loaded
+	// from the
+	// drop box. The list could be used to create student dirs if needed
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-21-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
 
 }

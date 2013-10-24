@@ -75,7 +75,10 @@ public class D2LStudentSubmissionInfo implements Serializable
 	{
 		return firstLast;
 	}
-
+	public String getFirstLastStudID()
+	{
+		return firstLast + "_" + this.d2lItem;
+	}
 	private void syncFirstLast()
 	{
 		this.firstLast = this.firstName + "_" + this.lastName;

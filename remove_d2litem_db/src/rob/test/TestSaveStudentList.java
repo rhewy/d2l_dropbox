@@ -1,12 +1,8 @@
 package rob.test;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
-
 import javax.swing.JFileChooser;
-
 import rob.com.utils.D2L;
 import rob.com.utils.D2LStudentSubmissionInfo;
 
@@ -27,10 +23,9 @@ public class TestSaveStudentList
 			if (getPath.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
 			{
 				D2L.saveStudentList(getPath.getSelectedFile(), list);
-				ObjectInputStream in = new ObjectInputStream(
-						new FileInputStream(getPath.getSelectedFile()));
-				ArrayList<D2LStudentSubmissionInfo> testList = (ArrayList<D2LStudentSubmissionInfo>) in
-						.readObject();
+		
+				ArrayList<D2LStudentSubmissionInfo> testList = 
+						D2L.loadStudentList(getPath.getSelectedFile());
 				for (D2LStudentSubmissionInfo info : testList)
 				{
 					System.out.println(info.getFirstLast());

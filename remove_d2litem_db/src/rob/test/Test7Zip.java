@@ -1,4 +1,9 @@
 package rob.test;
+
+import javax.swing.JFileChooser;
+
+import rob.com.utils.ZipBy7;
+
 //==============================================================================
 // File         : Test7Zip.java
 //
@@ -14,28 +19,26 @@ package rob.test;
 //
 // Modification Log :
 //    --> Created OCT-23-2013 (rh)
-//    --> Updated MMM-DD-YYYY (fl)
+//    --> Updated OCT-25-2013 (rh) moved code to Test7ZipLib.java
 //
 // =============================================================================
-import javax.swing.JFileChooser;
-
-import rob.com.utils.ZipBy7;
-
 public class Test7Zip
 {
 	public static void main(String[] args) throws Exception
 	{
-		try
+		JFileChooser getPath = new JFileChooser();
+		if (getPath.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			JFileChooser getPath = new JFileChooser();
-			getPath.showOpenDialog(null);
-			int num_files = ZipBy7.getNumberOfItemsInArchive(getPath.getSelectedFile().getAbsolutePath());
-			System.out.println(num_files);
+			if(ZipBy7.isArchive(getPath.getSelectedFile().getAbsolutePath()))
+			{
+				System.out.println("Zip file");
+			}
+			else
+			{
+				System.out.println("Regular file");
+			}
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+
 	}
 
-}
+} 

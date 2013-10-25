@@ -16,7 +16,7 @@ public class TestMoveFiles
 		{
 			ArrayList<D2LStudentSubmissionInfo> list = D2L
 					.loadStudentList(getPath.getSelectedFile());
-			D2L.moveFile(getPath.getSelectedFile().getParentFile(), list);
+			D2L.moveFiles(getPath.getSelectedFile().getParentFile(), list);
 		}
 	}
 }

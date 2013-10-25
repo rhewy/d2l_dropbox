@@ -1,6 +1,5 @@
 package rob.test;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;

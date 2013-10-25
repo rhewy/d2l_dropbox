@@ -358,7 +358,7 @@ public class D2L
 	}
 
 	// ==============================================================================
-	// Method : moveFile
+	// Method : moveFiles
 	//
 	// Current Author: Robert Hewlett
 	//
@@ -366,18 +366,17 @@ public class D2L
 	//
 	// Contact Info: rob.hewy@gmail.com
 	//
-	// Purpose : create a unique student list from all the files down loaded
-	// from the
-	// drop box. The list could be used to create student dirs if needed
+	// Purpose : move students files from the down loaded drop box to the matching
+	//           student directory
 	//
 	// Dependencies: None
 	//
 	// Modification Log :
-	// --> Created OCT-21-2013 (rh)
+	// --> Created OCT-24-2013 (rh)
 	// --> Updated MMM-DD-YYYY (fl)
 	//
 	// =============================================================================
-	public static void moveFile(File dir,
+	public static void moveFiles(File dir,
 			ArrayList<D2LStudentSubmissionInfo> list)
 	{
 		// ===========================================================
@@ -419,5 +418,39 @@ public class D2L
 			} // end for each file/dir
 		} // end of the for each student
 	} // end of method
-
+	
+	// ==============================================================================
+	// Method : unZipFiles
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : unzip any files in the student's directory
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-24-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================	
+	public static void unZipFiles(File dir,
+			ArrayList<D2LStudentSubmissionInfo> list)
+	{
+		File studDir;
+		File[] studFiles;
+		
+		for(D2LStudentSubmissionInfo info: list)
+		{
+			studDir = new File(dir, info.getFirstLastStudID());
+		    studFiles = studDir.listFiles();
+		    
+		    
+		    
+			
+		}
+	}
 } // end of the class

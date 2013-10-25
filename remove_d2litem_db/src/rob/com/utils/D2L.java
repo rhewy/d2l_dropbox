@@ -435,16 +435,31 @@ public class D2L
 	// --> Updated MMM-DD-YYYY (fl)
 	//
 	// =============================================================================
-	public static void unZipFiles(File dir,
+	public static void unZipAllStudentFiles(File dir,
 			ArrayList<D2LStudentSubmissionInfo> list)
+	{
+		File studDir;
+		for (D2LStudentSubmissionInfo info : list)
+		{
+			// ===========================================================
+			// Get your feet right: point at an individual students dir
+			// ===========================================================
+			studDir = new File(dir, info.getFirstLastStudID());
+		    unZipOneStudentsFiles(studDir);	
+		}
+		
+	}
+
+	public static void unZipOneStudentsFiles(File dir)
 	{
 
 		// ===========================================================
-		// vars for the core student dir and the files in their dirs 
+		// vars for the core student dir and the files in their dirs
 		// ===========================================================
-		File studDir;
+		// File studDir;
 		File[] studFiles;
-		
+		studFiles = dir.listFiles();
+		File tmpUnzipDir;
 		// ===========================================================
 		// build a sub directory to unzip files ... stop collisions
 		// ===========================================================
@@ -453,27 +468,21 @@ public class D2L
 		String zipDirName = null;
 		// ===========================================================
 		// for all the students unzip all the files in the student dir
-		// ===========================================================		
-		for (D2LStudentSubmissionInfo info : list)
+		// ===========================================================
+		for (File file : studFiles)
 		{
-			// ===========================================================
-			// Get your feet right: point at an individual students dir
-			// ===========================================================				
-			studDir = new File(dir, info.getFirstLastStudID());
-			studFiles = studDir.listFiles();
-			for (File file : studFiles)
+			if (ZipBy7.isArchive(file))
 			{
-				if (ZipBy7.isArchive(file))
-				{
-					zipFileCount += 1;
-					// ===========================================================
-					// make the dir that will be used for a zip file
-					// ===========================================================	
-					zipDirName = String.format("%s%03d", zipDirPrefix,
-							zipFileCount);
-					System.out.println(zipDirName);
-
-				}
+				zipFileCount += 1;
+				// ===========================================================
+				// make the dir that will be used for a zip file
+				// ===========================================================
+				zipDirName = String
+						.format("%s%03d", zipDirPrefix, zipFileCount);
+				System.out.println(zipDirName);
+				tmpUnzipDir = new File(file.getParentFile(), zipDirName);
+				tmpUnzipDir.mkdir();
+				ZipBy7.unZipWholeFile(file, tmpUnzipDir);
 			}
 		}
 	}

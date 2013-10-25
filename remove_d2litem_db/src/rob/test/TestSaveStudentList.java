@@ -13,6 +13,7 @@ public class TestSaveStudentList
 		File dropbox_dir;
 
 		JFileChooser getPath = new JFileChooser();
+		getPath.setCurrentDirectory(new File("H:/_var/assign_raw/gist/7010/test"));
 		getPath.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (getPath.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{

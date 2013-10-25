@@ -29,7 +29,7 @@ public class Test7Zip
 		JFileChooser getPath = new JFileChooser();
 		if (getPath.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			if(ZipBy7.isArchive(getPath.getSelectedFile().getAbsolutePath()))
+			if(ZipBy7.isArchive(getPath.getSelectedFile()))
 			{
 				System.out.println("Zip file");
 			}

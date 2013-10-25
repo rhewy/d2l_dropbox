@@ -14,7 +14,7 @@ public class TestUnZip
 		getPath.setCurrentDirectory(new File("H:/_var/assign_raw/gist/7010/test"));
 		if (getPath.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-			if(ZipBy7.isArchive(getPath.getSelectedFile().getAbsolutePath()))
+			if(ZipBy7.isArchive(getPath.getSelectedFile()))
 			{
 				ZipBy7.unZipWholeFile(getPath.getSelectedFile(), 
 						getPath.getSelectedFile().getParentFile());
@@ -24,7 +24,6 @@ public class TestUnZip
 				System.out.println("Regular file");
 			}
 		}
-
 
 	}
 

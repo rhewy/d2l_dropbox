@@ -363,8 +363,9 @@ public class D2L
 	//
 	// Contact Info: rob.hewy@gmail.com
 	//
-	// Purpose : move students files from the down loaded drop box to the matching
-	//           student directory
+	// Purpose : move students files from the down loaded drop box to the
+	// matching
+	// student directory
 	//
 	// Dependencies: None
 	//
@@ -415,7 +416,7 @@ public class D2L
 			} // end for each file/dir
 		} // end of the for each student
 	} // end of method
-	
+
 	// ==============================================================================
 	// Method : unZipFiles
 	//
@@ -433,17 +434,47 @@ public class D2L
 	// --> Created OCT-24-2013 (rh)
 	// --> Updated MMM-DD-YYYY (fl)
 	//
-	// =============================================================================	
+	// =============================================================================
 	public static void unZipFiles(File dir,
 			ArrayList<D2LStudentSubmissionInfo> list)
 	{
+
+		// ===========================================================
+		// vars for the core student dir and the files in their dirs 
+		// ===========================================================
 		File studDir;
 		File[] studFiles;
 		
-		for(D2LStudentSubmissionInfo info: list)
+		// ===========================================================
+		// build a sub directory to unzip files ... stop collisions
+		// ===========================================================
+		String zipDirPrefix = "zf_";
+		int zipFileCount = 0;
+		String zipDirName = null;
+		// ===========================================================
+		// for all the students unzip all the files in the student dir
+		// ===========================================================		
+		for (D2LStudentSubmissionInfo info : list)
 		{
+			// ===========================================================
+			// Get your feet right: point at an individual students dir
+			// ===========================================================				
 			studDir = new File(dir, info.getFirstLastStudID());
-		    studFiles = studDir.listFiles();
+			studFiles = studDir.listFiles();
+			for (File file : studFiles)
+			{
+				if (ZipBy7.isArchive(file))
+				{
+					zipFileCount += 1;
+					// ===========================================================
+					// make the dir that will be used for a zip file
+					// ===========================================================	
+					zipDirName = String.format("%s%03d", zipDirPrefix,
+							zipFileCount);
+					System.out.println(zipDirName);
+
+				}
+			}
 		}
 	}
 } // end of the class

@@ -1,5 +1,25 @@
 package rob.com.utils;
 
+//==============================================================================
+// File         : ZibBy7.java
+//
+// Current Author: Robert Hewlett
+//
+// Previous Author: None
+//
+// Contact Info: rob.hewy@.com
+//
+// Purpose : Contains methods for working with the 7Zip JNI
+//           e.g. unZipWholeFile
+//
+// Dependencies: Most of these methods will require parts of the following
+//               JARS: sevenzipjbinding and sevenzipjbinding-AllWindows 
+//
+// Modification Log :
+//    --> Created OCT-25-2013 (rh)
+//    --> Updated MMM-DD-YYYY (fl)
+//
+// =============================================================================
 import java.io.File;
 import java.io.RandomAccessFile;
 import net.sf.sevenzipjbinding.ISevenZipInArchive;
@@ -10,7 +30,26 @@ import net.sf.sevenzipjbinding.simple.ISimpleInArchiveItem;
 
 public class ZipBy7
 {
-	static public boolean isArchive(String archiveFilename)
+	// ==============================================================================
+	// Method : isArchive
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : Determine if the "file" is a true archive file
+	// e.g. zip 7z --> yes txt doc csv html --> no
+	//
+	// Dependencies: sevenzipjbinding and sevenzipjbinding-AllWindows
+	//
+	// Modification Log :
+	// --> Created OCT-25-2013 (rh)
+	// --> Updated MMM-DD-YYYY (fl)
+	//
+	// =============================================================================
+	static public boolean isArchive(File archiveFilename)
 
 	{
 		boolean zipFile = false;
@@ -22,7 +61,7 @@ public class ZipBy7
 		try
 		{
 			RandomAccessFile randomAccessFile = new RandomAccessFile(
-					archiveFilename, "r");
+					archiveFilename.getAbsolutePath(), "r");
 			ISevenZipInArchive inArchive = SevenZip.openInArchive(null,
 					new RandomAccessFileInStream(randomAccessFile));
 			inArchive.close();
@@ -36,10 +75,13 @@ public class ZipBy7
 
 	public static void unZipWholeFile(File archive, File toDir)
 	{
-		if (isArchive(archive.getAbsolutePath()))
+		if (isArchive(archive))
 		{
 			try
 			{
+				// ===========================================================
+				// open the archive file as a random access file
+				// ===========================================================
 				RandomAccessFile randomAccessFile = new RandomAccessFile(
 						archive.getAbsolutePath(), "r");
 				ISevenZipInArchive inArchive = SevenZip.openInArchive(null,
@@ -51,8 +93,14 @@ public class ZipBy7
 				// ===========================================================
 				ISimpleInArchiveItem[] items = simpleArchive.getArchiveItems();
 
-				FileExtractStream bigStream;
+				// ===========================================================
+				// One would need a file/dir location to write the data to
+				// and an ISequentialOutStream object to do the writing
+				// I built a custom class the wrapped a standard java 
+				// FileOutputStream. Take a look at the class FileExtractStream 
+				// ===========================================================
 				File tmpLoc;
+				FileExtractStream bigStream;
 				// ===========================================================
 				// For every file in the archive. Note: dirs are implied by
 				// the files path
@@ -69,14 +117,13 @@ public class ZipBy7
 						// ===========================================================
 						// extract the file at the new location
 						// ===========================================================
-
 						bigStream = new FileExtractStream(tmpLoc);
 						item.extractSlow(bigStream);
 
 						tmpLoc = null;
 						bigStream = null;
-					}
-				}
+					} // end of skip folders only do files
+				} // end of the for
 
 				inArchive.close();
 			} // end of try

@@ -21,8 +21,6 @@ import java.io.RandomAccessFile;
 
 import javax.swing.JFileChooser;
 
-import rob.com.utils.ZipBy7;
-
 import net.sf.sevenzipjbinding.ArchiveFormat;
 import net.sf.sevenzipjbinding.ISevenZipInArchive;
 import net.sf.sevenzipjbinding.SevenZip;

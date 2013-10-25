@@ -20,11 +20,8 @@ package rob.com.utils;
 //
 //=============================================================================
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -413,7 +410,7 @@ public class D2L
 					{
 						toFile = new File(toDir, fromFile.getName());
 						fromFile.renameTo(toFile);
-					} // end of move the file by rnaing the file
+					} // end of move the file by renaming the file
 				} // end if it is a file and not a dir
 			} // end for each file/dir
 		} // end of the for each student
@@ -447,10 +444,6 @@ public class D2L
 		{
 			studDir = new File(dir, info.getFirstLastStudID());
 		    studFiles = studDir.listFiles();
-		    
-		    
-		    
-			
 		}
 	}
 } // end of the class

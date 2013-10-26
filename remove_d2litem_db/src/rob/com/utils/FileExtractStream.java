@@ -17,7 +17,7 @@ package rob.com.utils;
 //
 // Modification Log :
 //    --> Created OCT-24-2013 (rh)
-//    --> Updated MMM-DD-YYYY (fl)
+//    --> Updated OCT-26-2013 (rh) updated for chunk-ing the write
 //
 // =============================================================================
 import java.io.File;
@@ -38,26 +38,46 @@ public class FileExtractStream implements ISequentialOutStream
 
 	// ===========================================================
 	// Constructor: A location to write to is a requirement
-	// ===========================================================	
+	// ===========================================================
 	FileExtractStream(File fout)
 	{
 		try
 		{
 			// ===========================================================
 			// make any missing parent dirs and initialize the stream
-			// ===========================================================	
+			// ===========================================================
 			this.fileOut = fout;
 			fout.getParentFile().mkdirs();
 			out = new FileOutputStream(this.fileOut);
 		}
-		catch (FileNotFoundException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
-	// ===========================================================
-	// This is the one method required by ISequentialOutStream
-	// ===========================================================
+
+	// ==============================================================================
+	// Method : write
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : This is a requirement of ISequentialOutStream.
+	//
+	// Note: After testing  on larger files within a zip file, I realized
+	// this method can be called several times on a single file within the
+	// archive ... the library chunks the decompression
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-23-2013 (rh)
+	// --> Updated OCT-26-2013 (rh) --> modified for chunking
+	//
+	// =============================================================================
 	@Override
 	public int write(byte[] data) throws SevenZipException
 	{
@@ -66,19 +86,51 @@ public class FileExtractStream implements ISequentialOutStream
 		{
 			// ===========================================================
 			// writes the byes out in one big chunk
-			// ===========================================================	
+			// ===========================================================
 			this.out.write(data);
-			this.out.close();
 			bytesWritten = data.length;
 		}
-		catch (IOException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		// ===========================================================
-		// send back the number of bytes written. BTW do not send back
-		// zero and an exception will be thrown
-		// ===========================================================	
+		// Send back the chunk size written on this call
+		// if zero is sent back something went wrong
+		// ===========================================================
 		return bytesWritten;
+	}
+	// ==============================================================================
+	// Method : close
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : Simple pass-through to close the stream  
+	//
+	// Note: Needed an external method to close the file
+	//       Previously I was closing the file too early 
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-26-2013 (rh)
+	// --> Updated MM-DD-YYYY (fl)
+	//
+	// =============================================================================
+
+	public void close()
+	{
+		try
+		{
+			this.out.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

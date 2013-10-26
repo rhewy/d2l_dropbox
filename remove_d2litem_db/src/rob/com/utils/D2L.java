@@ -479,7 +479,6 @@ public class D2L
 				// ===========================================================
 				zipDirName = String
 						.format("%s%03d", zipDirPrefix, zipFileCount);
-				System.out.println(zipDirName);
 				tmpUnzipDir = new File(file.getParentFile(), zipDirName);
 				tmpUnzipDir.mkdir();
 				ZipBy7.unZipWholeFile(file, tmpUnzipDir);

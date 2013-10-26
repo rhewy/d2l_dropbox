@@ -22,6 +22,8 @@ package rob.com.utils;
 // =============================================================================
 import java.io.File;
 import java.io.RandomAccessFile;
+
+import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.ISevenZipInArchive;
 import net.sf.sevenzipjbinding.SevenZip;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
@@ -52,25 +54,27 @@ public class ZipBy7
 	static public boolean isArchive(File archiveFilename)
 
 	{
-		boolean zipFile = false;
+		boolean isZipFile = false;
 		// ===========================================================
 		// Try to open the file as a zip file if that fails
 		// then assume it is not a zip file
 		// ===========================================================
-
-		try
+		if (!archiveFilename.getName().endsWith(".odb"))
 		{
-			RandomAccessFile randomAccessFile = new RandomAccessFile(
-					archiveFilename.getAbsolutePath(), "r");
-			ISevenZipInArchive inArchive = SevenZip.openInArchive(null,
-					new RandomAccessFileInStream(randomAccessFile));
-			inArchive.close();
-			zipFile = true;
-		} // end of try
-		catch (Exception e)
-		{
-		} // end of catch
-		return zipFile;
+			try
+			{
+				RandomAccessFile randomAccessFile = new RandomAccessFile(
+						archiveFilename.getAbsolutePath(), "r");
+				ISevenZipInArchive inArchive = SevenZip.openInArchive(null,
+						new RandomAccessFileInStream(randomAccessFile));
+				inArchive.close();
+				isZipFile = true;
+			} // end of try
+			catch (Exception e)
+			{
+			} // end of catch
+		}
+		return isZipFile;
 	} // end of method
 
 	public static void unZipWholeFile(File archive, File toDir)
@@ -79,6 +83,8 @@ public class ZipBy7
 		{
 			try
 			{
+				System.out.println("Trying to unzip "
+						+ archive.getAbsolutePath());
 				// ===========================================================
 				// open the archive file as a random access file
 				// ===========================================================
@@ -96,11 +102,12 @@ public class ZipBy7
 				// ===========================================================
 				// One would need a file/dir location to write the data to
 				// and an ISequentialOutStream object to do the writing
-				// I built a custom class the wrapped a standard java 
-				// FileOutputStream. Take a look at the class FileExtractStream 
+				// I built a custom class the wrapped a standard java
+				// FileOutputStream. Take a look at the class FileExtractStream
 				// ===========================================================
 				File tmpLoc;
 				FileExtractStream bigStream;
+				ExtractOperationResult result;
 				// ===========================================================
 				// For every file in the archive. Note: dirs are implied by
 				// the files path
@@ -114,12 +121,25 @@ public class ZipBy7
 					if (!item.isFolder())
 					{
 						tmpLoc = new File(toDir, item.getPath());
-						// ===========================================================
-						// extract the file at the new location
-						// ===========================================================
-						bigStream = new FileExtractStream(tmpLoc);
-						item.extractSlow(bigStream);
-
+						if (!item.getPath().endsWith(".xxxx"))
+						{
+							// ===========================================================
+							// extract the file at the new location
+							// ===========================================================
+							try
+							{
+								bigStream = new FileExtractStream(tmpLoc);
+							    result = item.extractSlow(bigStream);
+							    bigStream.close();
+							}
+							catch (Exception e)
+							{
+								System.out.printf(
+										"Problem extacting %s : from file : %s",
+										item.getPath(),
+										archive.getAbsolutePath());
+							}
+						}
 						tmpLoc = null;
 						bigStream = null;
 					} // end of skip folders only do files

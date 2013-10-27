@@ -107,10 +107,10 @@ public class ZipBy7
 				// ===========================================================
 				File tmpLoc;
 				FileExtractStream bigStream;
-				ExtractOperationResult result;
+				ExtractOperationResult result = null;
 				// ===========================================================
 				// For every file in the archive. Note: dirs are implied by
-				// the files path
+				// the file's path
 				// ===========================================================
 				for (ISimpleInArchiveItem item : items)
 				{
@@ -135,9 +135,9 @@ public class ZipBy7
 							catch (Exception e)
 							{
 								System.out.printf(
-										"Problem extacting %s : from file : %s",
-										item.getPath(),
-										archive.getAbsolutePath());
+										"Problem extacting %s : from file : %s : result %s",
+										item.getPath(), archive.getAbsolutePath(),
+										result);
 							}
 						}
 						tmpLoc = null;

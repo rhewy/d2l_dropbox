@@ -24,7 +24,7 @@ public class TestMakeMoveUnzip
 			dropbox_dir = getPath.getSelectedFile();
 			ArrayList<D2LStudentSubmissionInfo> list = D2L
 					.getStudentList(dropbox_dir);
-			D2L.saveStudentList(new File(dropbox_dir, "_student_list.obj"),
+			D2L.saveStudentList(new File(dropbox_dir, studentListFile ),
 					list);
 			D2L.makeDirs(dropbox_dir, list);
 			D2L.moveFiles(dropbox_dir, list);

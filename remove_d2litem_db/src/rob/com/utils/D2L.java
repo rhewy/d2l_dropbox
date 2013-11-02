@@ -481,7 +481,8 @@ public class D2L
 						.format("%s%03d", zipDirPrefix, zipFileCount);
 				tmpUnzipDir = new File(file.getParentFile(), zipDirName);
 				tmpUnzipDir.mkdir();
-				ZipBy7.unZipWholeFile(file, tmpUnzipDir);
+				ExtensionsToSkip skip = new ExtensionsToSkip();
+				ZipBy7.unZipWholeFile(file, tmpUnzipDir, skip.getExtensions());
 			}
 		}
 	}

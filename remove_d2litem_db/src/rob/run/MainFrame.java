@@ -24,6 +24,7 @@ import rob.com.utils.D2LStudentSubmissionInfo;
 import rob.com.utils.ExtensionsToSkip;
 import rob.com.utils.ZipBy7;
 import rob.test.TestUnZipOneStudentsFiles;
+import javax.swing.JButton;
 
 public class MainFrame
 {
@@ -67,7 +68,7 @@ public class MainFrame
 	private void initialize()
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 520, 318);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -139,14 +140,16 @@ public class MainFrame
 		JLabel lblListOfExtensions = new JLabel(
 				"List of extensions that will NOT be unzipped");
 		lblListOfExtensions.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblListOfExtensions.setBounds(72, 11, 360, 27);
+		lblListOfExtensions.setBounds(77, 11, 374, 27);
 		frame.getContentPane().add(lblListOfExtensions);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(58, 36, 374, 188);
+		scrollPane.setBounds(77, 36, 374, 188);
 		frame.getContentPane().add(scrollPane);
 
 		table = new JTable();
+		table.setRowMargin(4);
+		table.setRowHeight(18);
 		ExtensionsToSkip skip = new ExtensionsToSkip();
 
 		table.setModel(new DefaultTableModel(skip.getExtensionsAsObjects(),
@@ -154,7 +157,7 @@ public class MainFrame
 		{ "Extension", "Description" })
 		{
 			Class[] columnTypes = new Class[]
-			{ String.class, Object.class };
+			{ String.class, String.class };
 
 			public Class getColumnClass(int columnIndex)
 			{
@@ -164,10 +167,23 @@ public class MainFrame
 		table.getColumnModel().getColumn(1).setPreferredWidth(357);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		scrollPane.setViewportView(table);
+		
+		JButton btnAdd = new JButton("+");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tmpTM = (DefaultTableModel) getTable().getModel();
+				tmpTM.insertRow(tmpTM.getRowCount(), new Object[]{".abc","New File Extension"});
+			}
+		});
+		btnAdd.setBounds(10, 34, 52, 27);
+		frame.getContentPane().add(btnAdd);
 	}
 
 	public JFrame getFrame()
 	{
 		return frame;
+	}
+	public JTable getTable() {
+		return table;
 	}
 }

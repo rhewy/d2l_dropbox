@@ -27,6 +27,9 @@ import rob.com.utils.FileExtension;
 import rob.com.utils.ZipBy7;
 import javax.swing.JButton;
 
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 public class MainFrame
 {
 
@@ -69,7 +72,8 @@ public class MainFrame
 	private void initialize()
 	{
 		frmDlDropboxManager = new JFrame();
-		frmDlDropboxManager.setTitle("D2L Dropbox Manager by rob.hewy@gmail.com");
+		frmDlDropboxManager
+				.setTitle("D2L Dropbox Manager by rob.hewy@gmail.com");
 		frmDlDropboxManager.setBounds(100, 100, 520, 318);
 		frmDlDropboxManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -95,11 +99,13 @@ public class MainFrame
 			{
 				JFileChooser jfc = new JFileChooser();
 				jfc.setDialogTitle("Select a Zipfile to extract ...");
+				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
 				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 				{
-					ArrayList<FileExtension> exts = ((ExtensionsTableModel)table.getModel()).getDataAsFileExtensions();
+					ArrayList<FileExtension> exts = ((ExtensionsTableModel) table
+							.getModel()).getDataAsFileExtensions();
 					ZipBy7.unZipWholeFile(jfc.getSelectedFile(), jfc
-							.getSelectedFile().getParentFile(), exts );
+							.getSelectedFile().getParentFile(), exts);
 				}
 			}
 		});
@@ -133,6 +139,97 @@ public class MainFrame
 		});
 		mnFile.add(mntmOrganizeDropboxFiles);
 
+		JMenuItem mntmUnzipAndOrganize = new JMenuItem(
+				"Unzip and Organize a Dropbox");
+		mntmUnzipAndOrganize.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				File dropbox_dir;
+				String studentListFile = "_student_list.obj";
+
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Select a Zipfile to extract ...");
+				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+				{
+					ArrayList<FileExtension> exts = ((ExtensionsTableModel) table
+							.getModel()).getDataAsFileExtensions();
+					ZipBy7.unZipWholeFile(jfc.getSelectedFile(), jfc
+							.getSelectedFile().getParentFile(), exts);
+
+					dropbox_dir = jfc.getSelectedFile().getParentFile();
+					ArrayList<D2LStudentSubmissionInfo> list = D2L
+							.getStudentList(dropbox_dir);
+					D2L.saveStudentList(new File(dropbox_dir, studentListFile),
+							list);
+					D2L.makeDirs(dropbox_dir, list);
+					D2L.moveFiles(dropbox_dir, list);
+					D2L.unZipAllStudentFiles(dropbox_dir, list);
+
+				}
+			}
+		});
+		mnFile.add(mntmUnzipAndOrganize);
+
+		JMenuItem mntmSaveTheExtensions = new JMenuItem(
+				"Save the Extensions List");
+		mntmSaveTheExtensions.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				Serializer serializer = new Persister();
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Save the Extensions List as XML ...");
+				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+				{
+					
+					File result = jfc.getSelectedFile();
+					try
+					{
+						ExtensionsTableModel extTab = (ExtensionsTableModel) table.getModel();
+						ExtensionsToSkip extensions = new ExtensionsToSkip(extTab.getDataAsFileExtensions());
+						serializer.write(extensions, result);
+					}
+					catch (Exception e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+		mnFile.add(mntmSaveTheExtensions);
+
+		JMenuItem mntmLoadAnExtensions = new JMenuItem(
+				"Load an Extensions File");
+		mntmLoadAnExtensions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Serializer serializer = new Persister();
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Load Extensions in an XML ...");
+				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+				{
+					File source = jfc.getSelectedFile();
+					try
+					{
+						ExtensionsToSkip extensions =  serializer.read(ExtensionsToSkip.class, source);
+						ExtensionsTableModel extTab = (ExtensionsTableModel) table.getModel();
+						
+						extTab.setDataAsFileExtensions(extensions.getExtensions());
+					}
+					catch (Exception e1)
+					{
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		});
+		mnFile.add(mntmLoadAnExtensions);
+
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 		mnFile.add(mntmExit);
@@ -152,6 +249,8 @@ public class MainFrame
 		table.setRowMargin(4);
 		table.setRowHeight(18);
 		ExtensionsToSkip skip = new ExtensionsToSkip();
+		skip.loadDefault();
+		
 		ExtensionsTableModel tabMD = new ExtensionsTableModel(
 				skip.getExtensions());
 		table.setModel(tabMD);
@@ -166,10 +265,11 @@ public class MainFrame
 			{
 				DefaultTableModel tmpTM = (DefaultTableModel) getTable()
 						.getModel();
-				Object [] row = new Object[] { ".abc", "New File Extension"};
-				
-				tmpTM.insertRow(tmpTM.getRowCount(), row );
-				
+				Object[] row = new Object[]
+				{ ".abc", "New File Extension" };
+
+				tmpTM.insertRow(tmpTM.getRowCount(), row);
+
 			}
 		});
 		btnAdd.setBounds(10, 34, 52, 27);

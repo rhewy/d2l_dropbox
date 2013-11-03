@@ -2,27 +2,41 @@ package rob.com.utils;
 
 import java.util.ArrayList;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+@Root
 public class ExtensionsToSkip
 {
+	@ElementList
 	private ArrayList<FileExtension> extensions;
+
+	public ExtensionsToSkip(ArrayList<FileExtension> list)
+	{
+		this.extensions = list;
+	}
 
 	public ExtensionsToSkip()
 	{
-		this.extensions  = new ArrayList<FileExtension>();
-		
+		this.extensions = new ArrayList<FileExtension>();
+
+	}
+
+	public void loadDefault()
+	{
 		FileExtension odb = new FileExtension(".odb", "LibreOfice Base File");
 		extensions.add(odb);
 
-		FileExtension odt = new FileExtension(".odt","LibreOfice Writer File");
+		FileExtension odt = new FileExtension(".odt", "LibreOfice Writer File");
 		extensions.add(odt);
 
-		FileExtension odp = new FileExtension(".odp","LibreOfice Impress File");
+		FileExtension odp = new FileExtension(".odp", "LibreOfice Impress File");
 		extensions.add(odp);
 
-		FileExtension odg = new FileExtension(".odg","LibreOfice Drawing File");
+		FileExtension odg = new FileExtension(".odg", "LibreOfice Drawing File");
 		extensions.add(odg);
 
-		FileExtension ods = new FileExtension(".ods","LibreOfice Calc File");
+		FileExtension ods = new FileExtension(".ods", "LibreOfice Calc File");
 		extensions.add(ods);
 	}
 

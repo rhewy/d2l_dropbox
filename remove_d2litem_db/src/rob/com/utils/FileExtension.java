@@ -24,6 +24,11 @@ public class FileExtension implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String extention;
 	private String description;
+	public FileExtension()
+	{
+		this.extention = ".ukn";
+		this.description = "Unknown file extension";
+	}
 	public FileExtension(String ext, String desc)
 	{
 	 this.extention = ext;
@@ -34,6 +39,7 @@ public class FileExtension implements Serializable
 	 this.extention = ext.toString();
 	 this.description = desc.toString();
 	}
+	
 	public String getExtention()
 	{
 		return extention;

@@ -11,7 +11,7 @@ public class ExtensionsTableModel extends DefaultTableModel
 	public ExtensionsTableModel(ArrayList<FileExtension> list)
 	{
 		this.setColumnIdentifiers(new Object[]
-		{ String.class, String.class });
+		{ "Extension", "Description" });
 		
 		for (FileExtension ext : list)
 		{
@@ -33,4 +33,15 @@ public class ExtensionsTableModel extends DefaultTableModel
 		return list;
 	}
 
+	public void setDataAsFileExtensions(ArrayList<FileExtension> list)
+	{
+		this.setRowCount(0);
+		FileExtension tmpExt;
+		for (int i = 0; i < list.size(); i++)
+		{
+			tmpExt = list.get(i);
+			this.addRow(new Object[] {tmpExt.getExtention(),tmpExt.getDescription()});
+		}
+
+	}
 }

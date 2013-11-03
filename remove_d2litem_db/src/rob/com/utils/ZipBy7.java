@@ -17,7 +17,7 @@ package rob.com.utils;
 //
 // Modification Log :
 //    --> Created OCT-25-2013 (rh)
-//    --> Updated MMM-DD-YYYY (fl)
+//    --> Updated NOV-02-2013 (rh) - unZipWholeFile
 //
 // =============================================================================
 
@@ -94,8 +94,8 @@ public class ZipBy7
 	// Dependencies: None
 	//
 	// Modification Log :
-	// --> Created MMM-DD-YYYY (fl)
-	// --> Updated MMM-DD-YYYY (fl)
+	// --> Created MMM-DD-YYYY (rh)
+	// --> Updated NOV-02-2013 (rh) - added a check for file extensions to skip
 	//
 	// =============================================================================
 	public static void unZipWholeFile(File archive, File toDir,

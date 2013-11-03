@@ -1,5 +1,24 @@
 package rob.com.utils;
-
+//==============================================================================
+//File         : ExtensionsToSkip.java
+//
+//Current Author: Robert Hewlett
+//
+//Previous Author: None
+//
+//Contact Info: rob.hewy@gmail.com
+//
+//Purpose : Helper class to store a list of FileExtension and convert
+//          the list to a list of Object e.g. JTable friendly. 
+//          Serializable as XML using Simple from IBM
+//
+//Dependencies: org.simpleframework.xml
+//
+//Modification Log :
+//--> Created NOV-02-2013 (rh)
+//--> Updated MMM-DD-YYYY (fl)
+//
+//=============================================================================
 import java.util.ArrayList;
 
 import org.simpleframework.xml.ElementList;

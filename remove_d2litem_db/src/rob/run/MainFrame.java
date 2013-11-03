@@ -155,18 +155,6 @@ public class MainFrame
 		ExtensionsTableModel tabMD = new ExtensionsTableModel(
 				skip.getExtensions());
 		table.setModel(tabMD);
-		// table.setModel(new DefaultTableModel(skip.getExtensionsAsObjects(),
-		// new String[]
-		// { "Extension", "Description" })
-		// {
-		// Class[] columnTypes = new Class[]
-		// { String.class, String.class };
-		//
-		// public Class getColumnClass(int columnIndex)
-		// {
-		// return columnTypes[columnIndex];
-		// }
-		// });
 		table.getColumnModel().getColumn(1).setPreferredWidth(357);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		scrollPane.setViewportView(table);

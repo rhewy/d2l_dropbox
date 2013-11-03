@@ -20,21 +20,6 @@ public class ExtensionsTableModel extends DefaultTableModel
 		}
 	}
 
-	// @Override
-	// public Object getValueAt(int row, int column)
-	// {
-	// Object tmp = null;
-	// if(column == 0)
-	// {
-	// tmp = ((FileExtension)this.dataVector.get(row)).getExtention();
-	// }
-	// else if(column == 1)
-	// {
-	// tmp = ((FileExtension)this.dataVector.get(row)).getDescription();
-	// }
-	// return tmp;
-	// }
-
 	public ArrayList<FileExtension> getDataAsFileExtensions()
 	{
 		ArrayList<FileExtension> list = new ArrayList<FileExtension>();

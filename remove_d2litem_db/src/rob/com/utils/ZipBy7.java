@@ -20,9 +20,11 @@ package rob.com.utils;
 //    --> Updated MMM-DD-YYYY (fl)
 //
 // =============================================================================
+
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
+import java.util.List;
+
 
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.ISevenZipInArchive;
@@ -97,7 +99,7 @@ public class ZipBy7
 	//
 	// =============================================================================
 	public static void unZipWholeFile(File archive, File toDir,
-			ArrayList<FileExtension> skipExtensions)
+			List<FileExtension> skipExtensions)
 	{
 		if (isArchive(archive))
 		{
@@ -177,11 +179,11 @@ public class ZipBy7
 						}
 						tmpLoc = null;
 						bigStream = null;
-						System.out.println("Done unzipping .... "
-								+ archive.getAbsolutePath());
+						
 					} // end of skip folders only do files
 				} // end of the for
-
+				System.out.println("Done unzipping .... "
+						+ archive.getAbsolutePath());
 				inArchive.close();
 			} // end of try
 			catch (Exception e)

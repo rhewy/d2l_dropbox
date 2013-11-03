@@ -24,6 +24,16 @@ public class FileExtension implements Serializable
 	private static final long serialVersionUID = 1L;
 	private String extention;
 	private String description;
+	public FileExtension(String ext, String desc)
+	{
+	 this.extention = ext;
+	 this.description = desc;
+	}
+	public FileExtension(Object ext, Object desc)
+	{
+	 this.extention = ext.toString();
+	 this.description = desc.toString();
+	}
 	public String getExtention()
 	{
 		return extention;

@@ -21,15 +21,16 @@ import javax.swing.JSeparator;
 
 import rob.com.utils.D2L;
 import rob.com.utils.D2LStudentSubmissionInfo;
+import rob.com.utils.ExtensionsTableModel;
 import rob.com.utils.ExtensionsToSkip;
+import rob.com.utils.FileExtension;
 import rob.com.utils.ZipBy7;
-import rob.test.TestUnZipOneStudentsFiles;
 import javax.swing.JButton;
 
 public class MainFrame
 {
 
-	private JFrame frame;
+	private JFrame frmDlDropboxManager;
 	private JTable table;
 
 	/**
@@ -44,7 +45,7 @@ public class MainFrame
 				try
 				{
 					MainFrame window = new MainFrame();
-					window.frame.setVisible(true);
+					window.frmDlDropboxManager.setVisible(true);
 				}
 				catch (Exception e)
 				{
@@ -67,12 +68,13 @@ public class MainFrame
 	 */
 	private void initialize()
 	{
-		frame = new JFrame();
-		frame.setBounds(100, 100, 520, 318);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDlDropboxManager = new JFrame();
+		frmDlDropboxManager.setTitle("D2L Dropbox Manager by rob.hewy@gmail.com");
+		frmDlDropboxManager.setBounds(100, 100, 520, 318);
+		frmDlDropboxManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
+		frmDlDropboxManager.setJMenuBar(menuBar);
 
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
@@ -95,10 +97,9 @@ public class MainFrame
 				jfc.setDialogTitle("Select a Zipfile to extract ...");
 				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 				{
-					ExtensionsToSkip skip = new ExtensionsToSkip();
+					ArrayList<FileExtension> exts = ((ExtensionsTableModel)table.getModel()).getDataAsFileExtensions();
 					ZipBy7.unZipWholeFile(jfc.getSelectedFile(), jfc
-							.getSelectedFile().getParentFile(), skip
-							.getExtensions());
+							.getSelectedFile().getParentFile(), exts );
 				}
 			}
 		});
@@ -135,55 +136,65 @@ public class MainFrame
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 		mnFile.add(mntmExit);
-		frame.getContentPane().setLayout(null);
+		frmDlDropboxManager.getContentPane().setLayout(null);
 
 		JLabel lblListOfExtensions = new JLabel(
 				"List of extensions that will NOT be unzipped");
 		lblListOfExtensions.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblListOfExtensions.setBounds(77, 11, 374, 27);
-		frame.getContentPane().add(lblListOfExtensions);
+		frmDlDropboxManager.getContentPane().add(lblListOfExtensions);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(77, 36, 374, 188);
-		frame.getContentPane().add(scrollPane);
+		frmDlDropboxManager.getContentPane().add(scrollPane);
 
 		table = new JTable();
 		table.setRowMargin(4);
 		table.setRowHeight(18);
 		ExtensionsToSkip skip = new ExtensionsToSkip();
-
-		table.setModel(new DefaultTableModel(skip.getExtensionsAsObjects(),
-				new String[]
-		{ "Extension", "Description" })
-		{
-			Class[] columnTypes = new Class[]
-			{ String.class, String.class };
-
-			public Class getColumnClass(int columnIndex)
-			{
-				return columnTypes[columnIndex];
-			}
-		});
+		ExtensionsTableModel tabMD = new ExtensionsTableModel(
+				skip.getExtensions());
+		table.setModel(tabMD);
+		// table.setModel(new DefaultTableModel(skip.getExtensionsAsObjects(),
+		// new String[]
+		// { "Extension", "Description" })
+		// {
+		// Class[] columnTypes = new Class[]
+		// { String.class, String.class };
+		//
+		// public Class getColumnClass(int columnIndex)
+		// {
+		// return columnTypes[columnIndex];
+		// }
+		// });
 		table.getColumnModel().getColumn(1).setPreferredWidth(357);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		scrollPane.setViewportView(table);
-		
+
 		JButton btnAdd = new JButton("+");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DefaultTableModel tmpTM = (DefaultTableModel) getTable().getModel();
-				tmpTM.insertRow(tmpTM.getRowCount(), new Object[]{".abc","New File Extension"});
+		btnAdd.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				DefaultTableModel tmpTM = (DefaultTableModel) getTable()
+						.getModel();
+				Object [] row = new Object[] { ".abc", "New File Extension"};
+				
+				tmpTM.insertRow(tmpTM.getRowCount(), row );
+				
 			}
 		});
 		btnAdd.setBounds(10, 34, 52, 27);
-		frame.getContentPane().add(btnAdd);
+		frmDlDropboxManager.getContentPane().add(btnAdd);
 	}
 
 	public JFrame getFrame()
 	{
-		return frame;
+		return frmDlDropboxManager;
 	}
-	public JTable getTable() {
+
+	public JTable getTable()
+	{
 		return table;
 	}
 }

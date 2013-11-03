@@ -1,23 +1,5 @@
 package rob.com.utils;
 
-//==============================================================================
-// File         : ExtensionsToSkip.java
-//
-// Current Author: Robert Hewlett
-//
-// Previous Author: None
-//
-// Contact Info: rob.hewy@gmail.com
-//
-// Purpose : To create a default list of extensions to skip when unzipping
-//
-// Dependencies: None
-//
-// Modification Log :
-//    --> Created NOV-02-2013 (rh)
-//    --> Updated MMM-DD-YYYY (fl)
-//
-// =============================================================================
 import java.util.ArrayList;
 
 public class ExtensionsToSkip
@@ -28,29 +10,19 @@ public class ExtensionsToSkip
 	{
 		this.extensions  = new ArrayList<FileExtension>();
 		
-		FileExtension odb = new FileExtension();
-		odb.setExtention(".odb");
-		odb.setDescription("LibreOfice Base File");
+		FileExtension odb = new FileExtension(".odb", "LibreOfice Base File");
 		extensions.add(odb);
 
-		FileExtension odt = new FileExtension();
-		odt.setExtention(".odt");
-		odt.setDescription("LibreOfice Writer File");
+		FileExtension odt = new FileExtension(".odt","LibreOfice Writer File");
 		extensions.add(odt);
 
-		FileExtension odp = new FileExtension();
-		odp.setExtention(".odp");
-		odp.setDescription("LibreOfice Impress File");
+		FileExtension odp = new FileExtension(".odp","LibreOfice Impress File");
 		extensions.add(odp);
 
-		FileExtension odg = new FileExtension();
-		odg.setExtention(".odg");
-		odg.setDescription("LibreOfice Drawing File");
+		FileExtension odg = new FileExtension(".odg","LibreOfice Drawing File");
 		extensions.add(odg);
 
-		FileExtension ods = new FileExtension();
-		ods.setExtention(".ods");
-		ods.setDescription("LibreOfice Calc File");
+		FileExtension ods = new FileExtension(".ods","LibreOfice Calc File");
 		extensions.add(ods);
 	}
 

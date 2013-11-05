@@ -209,11 +209,11 @@ public class MainFrame
 		mntmLoadAnExtensions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Serializer serializer = new Persister();
-//				JFileChooser jfc = new JFileChooser();
-//				jfc.setDialogTitle("Load Extensions in an XML ...");
-//				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
-//				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-//				{
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Load Extensions in an XML ...");
+				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+				{
 //					File source = jfc.getSelectedFile();
 //					try
 //					{
@@ -226,7 +226,7 @@ public class MainFrame
 //					{
 //						e1.printStackTrace();
 //					}
-//				}
+				}
 
 			}
 		});

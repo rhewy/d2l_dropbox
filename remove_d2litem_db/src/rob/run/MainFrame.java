@@ -179,11 +179,11 @@ public class MainFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				Serializer serializer = new Persister();
-//				JFileChooser jfc = new JFileChooser();
-//				jfc.setDialogTitle("Save the Extensions List as XML ...");
-//				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
-//				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-//				{
+				JFileChooser jfc = new JFileChooser();
+				jfc.setDialogTitle("Save the Extensions List as XML ...");
+				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+				{
 //					
 //					File result = jfc.getSelectedFile();
 //					try
@@ -196,7 +196,7 @@ public class MainFrame
 //					{
 //						e1.printStackTrace();
 //					}
-//				}
+				}
 
 			}
 		});

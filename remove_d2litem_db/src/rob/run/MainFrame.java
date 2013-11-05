@@ -179,24 +179,24 @@ public class MainFrame
 			public void actionPerformed(ActionEvent e)
 			{
 				Serializer serializer = new Persister();
-				JFileChooser jfc = new JFileChooser();
-				jfc.setDialogTitle("Save the Extensions List as XML ...");
-				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
-				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
-				{
-					
-					File result = jfc.getSelectedFile();
-					try
-					{
-						ExtensionsTableModel extTab = (ExtensionsTableModel) table.getModel();
-						ExtensionsToSkip extensions = new ExtensionsToSkip(extTab.getDataAsFileExtensions());
-						serializer.write(extensions, result);
-					}
-					catch (Exception e1)
-					{
-						e1.printStackTrace();
-					}
-				}
+//				JFileChooser jfc = new JFileChooser();
+//				jfc.setDialogTitle("Save the Extensions List as XML ...");
+//				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+//				if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION)
+//				{
+//					
+//					File result = jfc.getSelectedFile();
+//					try
+//					{
+//						ExtensionsTableModel extTab = (ExtensionsTableModel) table.getModel();
+//						ExtensionsToSkip extensions = new ExtensionsToSkip(extTab.getDataAsFileExtensions());
+//						serializer.write(extensions, result);
+//					}
+//					catch (Exception e1)
+//					{
+//						e1.printStackTrace();
+//					}
+//				}
 
 			}
 		});
@@ -207,24 +207,24 @@ public class MainFrame
 		mntmLoadAnExtensions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Serializer serializer = new Persister();
-				JFileChooser jfc = new JFileChooser();
-				jfc.setDialogTitle("Load Extensions in an XML ...");
-				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
-				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-				{
-					File source = jfc.getSelectedFile();
-					try
-					{
-						ExtensionsToSkip extensions =  serializer.read(ExtensionsToSkip.class, source);
-						ExtensionsTableModel extTab = (ExtensionsTableModel) table.getModel();
-						
-						extTab.setDataAsFileExtensions(extensions.getExtensions());
-					}
-					catch (Exception e1)
-					{
-						e1.printStackTrace();
-					}
-				}
+//				JFileChooser jfc = new JFileChooser();
+//				jfc.setDialogTitle("Load Extensions in an XML ...");
+//				jfc.setCurrentDirectory(new File("H:/_var/assign_raw/"));
+//				if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+//				{
+//					File source = jfc.getSelectedFile();
+//					try
+//					{
+//						ExtensionsToSkip extensions =  serializer.read(ExtensionsToSkip.class, source);
+//						ExtensionsTableModel extTab = (ExtensionsTableModel) table.getModel();
+//						
+//						extTab.setDataAsFileExtensions(extensions.getExtensions());
+//					}
+//					catch (Exception e1)
+//					{
+//						e1.printStackTrace();
+//					}
+//				}
 
 			}
 		});

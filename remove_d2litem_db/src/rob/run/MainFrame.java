@@ -105,7 +105,7 @@ public class MainFrame
 					ArrayList<FileExtension> exts = ((ExtensionsTableModel) table
 							.getModel()).getDataAsFileExtensions();
 					ZipBy7.unZipWholeFile(jfc.getSelectedFile(), jfc
-							.getSelectedFile().getParentFile(), exts);
+							.getSelectedFile().getParentFile());
 				}
 			}
 		});
@@ -129,11 +129,13 @@ public class MainFrame
 					dropbox_dir = getPath.getSelectedFile();
 					ArrayList<D2LStudentSubmissionInfo> list = D2L
 							.getStudentList(dropbox_dir);
+					ArrayList<FileExtension> exts = ((ExtensionsTableModel) table
+							.getModel()).getDataAsFileExtensions();
 					D2L.saveStudentList(new File(dropbox_dir, studentListFile),
 							list);
 					D2L.makeDirs(dropbox_dir, list);
 					D2L.moveFiles(dropbox_dir, list);
-					D2L.unZipAllStudentFiles(dropbox_dir, list);
+					D2L.unZipAllStudentFiles(dropbox_dir, list, exts);
 				} // end of if the user selected a dir
 			}
 		});
@@ -156,7 +158,7 @@ public class MainFrame
 					ArrayList<FileExtension> exts = ((ExtensionsTableModel) table
 							.getModel()).getDataAsFileExtensions();
 					ZipBy7.unZipWholeFile(jfc.getSelectedFile(), jfc
-							.getSelectedFile().getParentFile(), exts);
+							.getSelectedFile().getParentFile());
 
 					dropbox_dir = jfc.getSelectedFile().getParentFile();
 					ArrayList<D2LStudentSubmissionInfo> list = D2L
@@ -165,7 +167,7 @@ public class MainFrame
 							list);
 					D2L.makeDirs(dropbox_dir, list);
 					D2L.moveFiles(dropbox_dir, list);
-					D2L.unZipAllStudentFiles(dropbox_dir, list);
+					D2L.unZipAllStudentFiles(dropbox_dir, list, exts);
 
 				}
 			}

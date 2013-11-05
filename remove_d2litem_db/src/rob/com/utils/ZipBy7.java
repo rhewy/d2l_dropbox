@@ -25,7 +25,6 @@ import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.List;
 
-
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.ISevenZipInArchive;
 import net.sf.sevenzipjbinding.SevenZip;
@@ -98,8 +97,7 @@ public class ZipBy7
 	// --> Updated NOV-02-2013 (rh) - added a check for file extensions to skip
 	//
 	// =============================================================================
-	public static void unZipWholeFile(File archive, File toDir,
-			List<FileExtension> skipExtensions)
+	public static void unZipWholeFile(File archive, File toDir)
 	{
 		if (isArchive(archive))
 		{
@@ -136,50 +134,34 @@ public class ZipBy7
 				// ===========================================================
 				for (ISimpleInArchiveItem item : items)
 				{
+					tmpLoc = new File(toDir, item.getPath());
 					// ===========================================================
 					// Skip the folders FileExtractStream will make them if
 					// needed by calling mkdirs on the parent file
 					// ===========================================================
 					if (!item.isFolder())
 					{
-						tmpLoc = new File(toDir, item.getPath());
-						boolean skipFile = false;
+
 						// ===========================================================
-						// Skip common document formats that use zip e.g. LibreOffice
-						// .odb, ods, odt, odp, odd
+						// extract the file at the new location
 						// ===========================================================
-						ExtensionsToSkip skip = new ExtensionsToSkip();
-						for(FileExtension extension:skip.getExtensions())
+						try
 						{
-							if(item.getPath().endsWith(extension.getExtention()))
-							{
-								skipFile = true;
-							}
+							bigStream = new FileExtractStream(tmpLoc);
+							result = item.extractSlow(bigStream);
+							bigStream.close();
+						}
+						catch (Exception e)
+						{
+							System.out
+									.printf("Problem extacting %s : from file : %s : result %s",
+											item.getPath(),
+											archive.getAbsolutePath(), result);
 						}
 
-						if (!skipFile)
-						{
-							// ===========================================================
-							// extract the file at the new location
-							// ===========================================================
-							try
-							{
-								bigStream = new FileExtractStream(tmpLoc);
-								result = item.extractSlow(bigStream);
-								bigStream.close();
-							}
-							catch (Exception e)
-							{
-								System.out
-										.printf("Problem extacting %s : from file : %s : result %s",
-												item.getPath(),
-												archive.getAbsolutePath(),
-												result);
-							}
-						}
 						tmpLoc = null;
 						bigStream = null;
-						
+
 					} // end of skip folders only do files
 				} // end of the for
 				System.out.println("Done unzipping .... "

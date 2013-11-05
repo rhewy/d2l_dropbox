@@ -19,8 +19,7 @@ public class TestUnZip
 			{
 				ExtensionsToSkip skip = new ExtensionsToSkip();
 				ZipBy7.unZipWholeFile(getPath.getSelectedFile(), 
-						getPath.getSelectedFile().getParentFile(),
-						skip.getExtensions());
+						getPath.getSelectedFile().getParentFile());
 			}
 			else
 			{

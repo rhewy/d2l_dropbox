@@ -7,6 +7,8 @@ import javax.swing.JFileChooser;
 
 import rob.com.utils.D2L;
 import rob.com.utils.D2LStudentSubmissionInfo;
+import rob.com.utils.ExtensionsToSkip;
+import rob.com.utils.FileExtension;
 
 public class TestMakeMoveUnzip
 {
@@ -28,7 +30,12 @@ public class TestMakeMoveUnzip
 					list);
 			D2L.makeDirs(dropbox_dir, list);
 			D2L.moveFiles(dropbox_dir, list);
-			D2L.unZipAllStudentFiles(dropbox_dir, list);
+			
+			ExtensionsToSkip extFact = new ExtensionsToSkip();
+			extFact.loadDefault();
+			ArrayList<FileExtension> exts = extFact.getExtensions();
+			
+			D2L.unZipAllStudentFiles(dropbox_dir, list, exts);
 		} // end of if the user selected a dir
 	} // end of main
 } // end of class

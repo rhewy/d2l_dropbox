@@ -7,6 +7,8 @@ import javax.swing.JFileChooser;
 
 import rob.com.utils.D2L;
 import rob.com.utils.D2LStudentSubmissionInfo;
+import rob.com.utils.ExtensionsToSkip;
+import rob.com.utils.FileExtension;
 
 public class TestUnZipAllStudentsFilesD2L
 {
@@ -19,7 +21,11 @@ public class TestUnZipAllStudentsFilesD2L
 		{
 			ArrayList<D2LStudentSubmissionInfo> testList = 
 					D2L.loadStudentList(getPath.getSelectedFile());
-			D2L.unZipAllStudentFiles(getPath.getSelectedFile().getParentFile(), testList);	
+			ExtensionsToSkip extFact = new ExtensionsToSkip();
+			extFact.loadDefault();
+			ArrayList<FileExtension> exts = extFact.getExtensions();
+			
+			D2L.unZipAllStudentFiles(getPath.getSelectedFile().getParentFile(), testList, exts);	
 		}		
 		System.out.println("Done .... ");
 	}

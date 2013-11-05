@@ -436,7 +436,8 @@ public class D2L
 	//
 	// =============================================================================
 	public static void unZipAllStudentFiles(File dir,
-			ArrayList<D2LStudentSubmissionInfo> list)
+			ArrayList<D2LStudentSubmissionInfo> list,
+			ArrayList<FileExtension> exts)
 	{
 		File studDir;
 		for (D2LStudentSubmissionInfo info : list)
@@ -445,14 +446,14 @@ public class D2L
 			// Get your feet right: point at an individual students dir
 			// ===========================================================
 			studDir = new File(dir, info.getFirstLastStudID());
-		    unZipOneStudentsFiles(studDir);	
+			unZipOneStudentsFiles(studDir, exts);
 		}
-		
+
 	}
 
-	public static void unZipOneStudentsFiles(File dir)
+	public static void unZipOneStudentsFiles(File dir,
+			ArrayList<FileExtension> exts)
 	{
-
 		// ===========================================================
 		// vars for the core student dir and the files in their dirs
 		// ===========================================================
@@ -471,7 +472,22 @@ public class D2L
 		// ===========================================================
 		for (File file : studFiles)
 		{
-			if (ZipBy7.isArchive(file))
+
+			boolean mustProcessFile = true;
+			// ===========================================================
+			// Skip common document formats that use zip e.g. LibreOffice
+			// .odb, ods, odt, odp, odd
+			// ===========================================================
+			for (FileExtension extension : exts)
+			{
+				if (file.getName().toLowerCase()
+						.endsWith(extension.getExtention().toLowerCase()))
+				{
+					mustProcessFile = false;
+				}
+			}
+
+			if ( mustProcessFile && ZipBy7.isArchive(file))
 			{
 				zipFileCount += 1;
 				// ===========================================================
@@ -482,7 +498,7 @@ public class D2L
 				tmpUnzipDir = new File(file.getParentFile(), zipDirName);
 				tmpUnzipDir.mkdir();
 				ExtensionsToSkip skip = new ExtensionsToSkip();
-				ZipBy7.unZipWholeFile(file, tmpUnzipDir, skip.getExtensions());
+				ZipBy7.unZipWholeFile(file, tmpUnzipDir);
 			}
 		}
 	}

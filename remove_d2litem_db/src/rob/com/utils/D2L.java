@@ -304,6 +304,7 @@ public class D2L
 	// --> Updated MMM-DD-YYYY (fl)
 	//
 	// =============================================================================
+	@SuppressWarnings("unchecked")
 	public static ArrayList<D2LStudentSubmissionInfo> loadStudentList(File file)
 	{
 		ArrayList<D2LStudentSubmissionInfo> list = null;
@@ -311,7 +312,11 @@ public class D2L
 		{
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(
 					file));
-			list = (ArrayList<D2LStudentSubmissionInfo>) in.readObject();
+			Object tmpObj = in.readObject();
+			if(tmpObj instanceof ArrayList<?>)
+			{	
+			  list = (ArrayList<D2LStudentSubmissionInfo>) tmpObj;
+			}
 			in.close();
 		}
 		catch (Exception e)
@@ -497,7 +502,6 @@ public class D2L
 						.format("%s%03d", zipDirPrefix, zipFileCount);
 				tmpUnzipDir = new File(file.getParentFile(), zipDirName);
 				tmpUnzipDir.mkdir();
-				ExtensionsToSkip skip = new ExtensionsToSkip();
 				ZipBy7.unZipWholeFile(file, tmpUnzipDir);
 			}
 		}

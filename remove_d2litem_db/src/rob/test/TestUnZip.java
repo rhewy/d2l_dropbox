@@ -4,7 +4,6 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import rob.com.utils.ExtensionsToSkip;
 import rob.com.utils.ZipBy7;
 
 public class TestUnZip
@@ -17,7 +16,6 @@ public class TestUnZip
 		{
 			if(ZipBy7.isArchive(getPath.getSelectedFile()))
 			{
-				ExtensionsToSkip skip = new ExtensionsToSkip();
 				ZipBy7.unZipWholeFile(getPath.getSelectedFile(), 
 						getPath.getSelectedFile().getParentFile());
 			}

@@ -23,7 +23,6 @@ package rob.com.utils;
 
 import java.io.File;
 import java.io.RandomAccessFile;
-import java.util.List;
 
 import net.sf.sevenzipjbinding.ExtractOperationResult;
 import net.sf.sevenzipjbinding.ISevenZipInArchive;

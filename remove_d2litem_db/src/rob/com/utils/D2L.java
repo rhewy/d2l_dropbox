@@ -16,7 +16,8 @@ package rob.com.utils;
 //
 //Modification Log :
 // --> Created OCT-21-2013 (rh)
-// --> Updated MMM-DD-YYYY (fl)
+// --> Updated NOV-02-2013 (rh) - added a check for file extensions to skip
+// --> Updated NOV-05-2013 (rh) - Fixed the above check --> wrong method too low 
 //
 //=============================================================================
 import java.io.File;
@@ -423,7 +424,7 @@ public class D2L
 	} // end of method
 
 	// ==============================================================================
-	// Method : unZipFiles
+	// Method : unZipAllStudentFile
 	//
 	// Current Author: Robert Hewlett
 	//
@@ -431,14 +432,15 @@ public class D2L
 	//
 	// Contact Info: rob.hewy@gmail.com
 	//
-	// Purpose : unzip any files in the student's directory
+	// Purpose : for a the student folders in a dropbox directory unzip all
+	//           the compressed files by calling unZipOneStudentsFiles
+	//           
 	//
-	// Dependencies: None
+	// Dependencies: A list of students and a list of extensions not to unzip
 	//
 	// Modification Log :
 	// --> Created OCT-24-2013 (rh)
-	// --> Updated MMM-DD-YYYY (fl)
-	//
+	// --> Updated NOV-05-2013 (rh) added skipping certain file extensions      
 	// =============================================================================
 	public static void unZipAllStudentFiles(File dir,
 			ArrayList<D2LStudentSubmissionInfo> list,
@@ -455,7 +457,24 @@ public class D2L
 		}
 
 	}
-
+	// ==============================================================================
+	// Method : unZipOneStudentsFiles
+	//
+	// Current Author: Robert Hewlett
+	//
+	// Previous Author: None
+	//
+	// Contact Info: rob.hewy@gmail.com
+	//
+	// Purpose : unzip all files in a student's directory except the files
+	//           with extensions on the extensions list
+	//
+	// Dependencies: None
+	//
+	// Modification Log :
+	// --> Created OCT-24-2013 (rh)
+	// --> Updated NOV-05-2013 (rh) added skipping certain file extensions      
+	// =============================================================================
 	public static void unZipOneStudentsFiles(File dir,
 			ArrayList<FileExtension> exts)
 	{

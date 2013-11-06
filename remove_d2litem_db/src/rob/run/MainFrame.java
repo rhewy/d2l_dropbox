@@ -75,7 +75,7 @@ public class MainFrame
 		frmDlDropboxManager
 				.setTitle("D2L Dropbox Manager by rob.hewy@gmail.com");
 		frmDlDropboxManager.setBounds(100, 100, 520, 318);
-		frmDlDropboxManager.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmDlDropboxManager.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
 		frmDlDropboxManager.setJMenuBar(menuBar);

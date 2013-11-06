@@ -94,6 +94,9 @@ public class ZipBy7
 	// Modification Log :
 	// --> Created MMM-DD-YYYY (rh)
 	// --> Updated NOV-02-2013 (rh) - added a check for file extensions to skip
+	// --> Updated NOV-05-2013 (rh) - removed the above check. Logic, if you are
+	//                                told to unzip a file then do it. Some other 
+	//                                method will block the file
 	//
 	// =============================================================================
 	public static void unZipWholeFile(File archive, File toDir)
